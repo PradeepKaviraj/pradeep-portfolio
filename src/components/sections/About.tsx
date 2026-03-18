@@ -5,7 +5,7 @@ import { motion, Variants } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 
 const About = () => {
-  const { summary, personal } = resumeData;
+  const { summary, personalInfo, strengths } = resumeData;
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -16,8 +16,8 @@ const About = () => {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.42, 0, 0.58, 1] } }
+    hidden: { opacity: 0, y: 50, scale: 0.98 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
   };
 
   return (
@@ -41,15 +41,15 @@ const About = () => {
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-4xl sm:text-5xl mb-6 shadow-xl">
                 👨‍💻
               </div>
-              <h3 className="text-2xl sm:text-3xl font-bold mb-2">{personal.name}</h3>
-              <p className="text-cyan-400 font-medium tracking-wide mb-6">{personal.role}</p>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-2">{personalInfo.name}</h3>
+              <p className="text-cyan-400 font-medium tracking-wide mb-6">{personalInfo.title}</p>
 
               <div className="w-full h-px bg-white/10 mb-6" />
 
               <div className="flex flex-col gap-3 w-full text-left">
                 <div className="flex justify-between items-center text-sm sm:text-base">
                   <span className="text-zinc-400">Location</span>
-                  <span className="font-medium text-right">{personal.location}</span>
+                  <span className="font-medium text-right">{personalInfo.location}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm sm:text-base">
                   <span className="text-zinc-400">Experience</span>
@@ -71,12 +71,12 @@ const About = () => {
             </h2>
 
             <div className="space-y-6 text-zinc-300 text-lg sm:text-xl leading-relaxed mb-10">
-              <p>{summary.description}</p>
+              <p>{summary}</p>
             </div>
 
             <div className="space-y-4">
-              <h4 className="text-xl font-bold text-white mb-6">Key Highlights</h4>
-              {summary.highlights.map((highlight, index) => (
+              <h4 className="text-xl font-bold text-white mb-6">Key Strengths</h4>
+              {strengths.map((highlight, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}

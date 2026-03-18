@@ -14,10 +14,10 @@ const Experience = () => {
       <div className="space-y-12">
         {experience.map((exp, i) => (
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3, delay: i * 0.1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
             key={i} 
             className="relative pl-8 md:pl-0"
           >
@@ -34,7 +34,7 @@ const Experience = () => {
                 <h3 className="text-2xl font-bold mb-1 text-white group-hover:text-emerald-400 transition-colors">{exp.role}</h3>
                 <p className="text-lg text-zinc-400 mb-2">{exp.company} <span className="text-sm px-2">•</span> {exp.location}</p>
                 <ul className="mt-4 space-y-3">
-                  {exp.highlights.map((highlight, idx) => (
+                  {exp.points.map((highlight, idx) => (
                     <li key={idx} className="flex gap-3 text-zinc-300">
                       <span className="text-emerald-500 shrink-0 mt-1.5 text-xs">◆</span>
                       <span className="leading-relaxed">{highlight}</span>
@@ -51,16 +51,17 @@ const Experience = () => {
       <div className="space-y-8">
         {education.map((edu, i) => (
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.3, delay: i * 0.1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
             key={i} 
             className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-cyan-500/30 transition-all shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 group"
           >
             <div>
               <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">{edu.degree}</h3>
               <p className="text-lg text-zinc-400">{edu.college}</p>
+              {edu.cgpa && <p className="text-sm text-zinc-500 mt-2 font-mono">CGPA: {edu.cgpa}</p>}
             </div>
             <div className="shrink-0 flex items-start">
               <span className="text-cyan-400 font-mono text-sm md:text-base font-bold bg-cyan-400/10 px-4 py-2 rounded-full border border-cyan-400/20">{edu.duration}</span>
@@ -73,17 +74,17 @@ const Experience = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {certifications.map((cert, i) => (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, delay: i * 0.1 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -20 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
             key={i} 
             className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-purple-500/30 transition-all shadow-lg group relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
               <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500"><path d="M12 15l-2 5l9-5z"/><circle cx="12" cy="8" r="6"/></svg>
             </div>
-            <h3 className="text-xl font-bold mb-4 text-white group-hover:text-purple-400 transition-colors relative z-10 pr-8">{cert.title}</h3>
+            <h3 className="text-xl font-bold mb-4 text-white group-hover:text-purple-400 transition-colors relative z-10 pr-8">{cert.name}</h3>
             
             <div className="flex items-center gap-3 mt-auto relative z-10">
               {cert.year && (
@@ -91,9 +92,6 @@ const Experience = () => {
               )}
               {cert.status && (
                 <span className="text-sm font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1 rounded-full">{cert.status}</span>
-              )}
-              {cert.organization && (
-                <span className="text-sm text-zinc-500 ml-auto">{cert.organization}</span>
               )}
             </div>
           </motion.div>

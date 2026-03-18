@@ -14,8 +14,8 @@ const Projects = () => {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 30 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1] } }
+    hidden: { opacity: 0, scale: 0.95, y: 40 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   };
 
   return (
@@ -56,7 +56,7 @@ const Projects = () => {
             >
               {/* Top Banner indicating type */}
               <div className="px-6 py-4 bg-zinc-900 border-b border-white/5 flex justify-between items-center">
-                <span className="text-xs font-bold uppercase tracking-wider text-purple-400">{project.type}</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-purple-400">{project.status || 'Completed'}</span>
                 <div className="flex gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
                   <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
@@ -65,40 +65,34 @@ const Projects = () => {
               </div>
 
               <div className="p-6 sm:p-8 flex flex-col flex-1">
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-purple-400 transition-colors tracking-tight">{project.title}</h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed flex-1">{project.description}</p>
+                <h3 className="text-2xl font-bold mb-5 group-hover:text-purple-400 transition-colors tracking-tight">{project.name}</h3>
 
-                <div className="mb-6 space-y-2">
-                  <h4 className="text-sm font-bold text-white mb-2">Key Features:</h4>
-                  <ul className="text-sm text-zinc-500 space-y-1">
-                    {project.features.slice(0, 3).map((feature, idx) => (
+                <div className="mb-6 space-y-2 flex-1">
+                  <h4 className="text-sm font-bold text-white mb-3">Highlights:</h4>
+                  <ul className="text-sm text-zinc-400 space-y-2 leading-relaxed">
+                    {project.description.slice(0, 4).map((feature, idx) => (
                       <li key={idx} className="flex gap-2">
-                        <span className="text-purple-500">▹</span> {feature}
+                        <span className="text-purple-500 shrink-0">▹</span> <span>{feature}</span>
                       </li>
                     ))}
-                    {project.features.length > 3 && (
+                    {project.description.length > 4 && (
                       <li className="text-purple-400/50 pl-4 text-xs italic">...and more</li>
                     )}
                   </ul>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {project.techStack.map(tag => (
+                <div className="flex flex-wrap gap-2 mb-8 mt-auto">
+                  {project.tech.map(tag => (
                     <span key={tag} className="text-xs font-bold px-3 py-1.5 bg-white/5 border border-white/5 rounded-full text-zinc-300">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="pt-6 border-t border-white/10 flex gap-4 mt-auto">
-                  {project.live && (
-                    <a href={project.live} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors text-sm">
-                      Live Demo
-                    </a>
-                  )}
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-white/10 transition-colors text-sm">
-                      GitHub
+                <div className="pt-6 border-t border-white/10 flex gap-4">
+                  {project.link && (
+                    <a href={project.link} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors text-sm">
+                      View Project
                     </a>
                   )}
                 </div>

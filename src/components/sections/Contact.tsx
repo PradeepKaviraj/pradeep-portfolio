@@ -1,15 +1,67 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, Variants } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 
 const Contact = () => {
-  const { email, phone, location, github, linkedin } = resumeData.personal;
+  const { email, phone, location, links } = resumeData.personalInfo;
+  const { github, linkedin } = links;
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, y: 50, scale: 0.98 },
+    visible: { 
+      opacity: 1, y: 0, scale: 1,
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.15 } 
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setStatusMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus('success');
+        setStatusMessage('Message sent successfully!');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+        setStatusMessage(data.error || 'Failed to send message.');
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+      setStatusMessage('Network error occurred. Please try again.');
+    }
   };
 
   return (
@@ -20,13 +72,7 @@ const Contact = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          variants={{
-            hidden: { opacity: 0, y: 50 },
-            visible: { 
-              opacity: 1, y: 0, 
-              transition: { duration: 0.7, staggerChildren: 0.2 } 
-            }
-          }}
+          variants={containerVariants}
         >
           {/* Decorative Background Blur */}
           <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-blue-600/10 blur-[80px] sm:blur-[100px] -mr-32 -mt-32 rounded-full pointer-events-none" />
@@ -37,10 +83,10 @@ const Contact = () => {
             {/* Contact Info Side */}
             <motion.div variants={itemVariants} className="flex flex-col justify-center">
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
-                Let's <span className="text-blue-500">Connect</span>.
+                Let&apos;s <span className="text-blue-500">Connect</span>.
               </h2>
               <p className="text-lg sm:text-xl text-zinc-400 mb-12 max-w-lg leading-relaxed">
-                I'm currently looking for new opportunities. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!
+                I&apos;m currently looking for new opportunities. Whether you have a question, a project idea, or just want to say hi, I&apos;ll try my best to get back to you!
               </p>
               
               <div className="space-y-6 sm:space-y-8">
@@ -87,32 +133,40 @@ const Contact = () => {
             </motion.div>
 
             {/* Form Side */}
-            <motion.form variants={itemVariants} className="space-y-4 sm:space-y-6 flex flex-col justify-center">
+            <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 flex flex-col justify-center">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-zinc-400 px-1">Your Name</label>
-                  <input type="text" placeholder="John Doe" className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all placeholder:text-zinc-600" />
+                  <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="John Doe" disabled={status === 'loading'} className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all placeholder:text-zinc-600 disabled:opacity-50" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-zinc-400 px-1">Your Email</label>
-                  <input type="email" placeholder="john@example.com" className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all placeholder:text-zinc-600" />
+                  <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="john@example.com" disabled={status === 'loading'} className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all placeholder:text-zinc-600 disabled:opacity-50" />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-zinc-400 px-1">Subject</label>
-                <input type="text" placeholder="Opportunity / Hello" className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all placeholder:text-zinc-600" />
+                <input name="subject" value={formData.subject} onChange={handleChange} type="text" placeholder="Opportunity / Hello" disabled={status === 'loading'} className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all placeholder:text-zinc-600 disabled:opacity-50" />
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-bold text-zinc-400 px-1">Message</label>
-                <textarea placeholder="How can I help you?" rows={5} className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all resize-none placeholder:text-zinc-600" />
+                <textarea required name="message" value={formData.message} onChange={handleChange} placeholder="How can I help you?" rows={5} disabled={status === 'loading'} className="w-full bg-zinc-900 border border-white/10 rounded-2xl px-6 py-4 focus:border-blue-500 focus:bg-white/5 outline-none transition-all resize-none placeholder:text-zinc-600 disabled:opacity-50" />
               </div>
+              
+              {statusMessage && (
+                <div className={`p-4 rounded-xl text-sm font-bold ${status === 'success' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}>
+                  {statusMessage}
+                </div>
+              )}
+
               <button 
-                type="button"
-                className="w-full py-4 sm:py-5 mt-2 bg-white text-black rounded-2xl font-bold text-lg hover:bg-zinc-200 hover:scale-[1.01] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] relative overflow-hidden group"
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full py-4 sm:py-5 mt-2 bg-white text-black rounded-2xl font-bold text-lg hover:bg-zinc-200 hover:scale-[1.01] active:scale-[0.98] transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)] relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Send Message
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  {status === 'loading' ? 'Sending...' : 'Send Message'}
+                  {status !== 'loading' && <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>}
                 </span>
               </button>
             </motion.form>

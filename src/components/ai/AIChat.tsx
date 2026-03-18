@@ -42,7 +42,7 @@ const AIChat = () => {
                   <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-zinc-900 rounded-full" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-sm sm:text-base">{resumeData.personal.name}</h3>
+                  <h3 className="font-bold text-white text-sm sm:text-base">{resumeData.personalInfo.name}</h3>
                   <p className="text-xs text-emerald-400 font-medium">Digital Clone Online</p>
                 </div>
               </div>
@@ -59,7 +59,7 @@ const AIChat = () => {
             <div className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 bg-zinc-950/50 scroll-smooth">
               {messages.length === 0 && (
                 <div className="text-center text-zinc-500 mt-10 text-sm">
-                  <p className="mb-2">👋 Hi! I'm the digital clone of {resumeData.personal.name}.</p>
+                  <p className="mb-2">👋 Hi! I&apos;m the digital clone of {resumeData.personalInfo.name}.</p>
                   <p>Ask me about his skills, experience, or projects!</p>
                 </div>
               )}

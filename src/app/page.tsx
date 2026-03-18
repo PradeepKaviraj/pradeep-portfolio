@@ -5,10 +5,12 @@ import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
 import Contact from "@/components/sections/Contact";
 import AIChat from "@/components/ai/AIChat";
+import Preloader from "@/components/ui/Preloader";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white selection:bg-blue-500/30">
+      <Preloader />
       <Hero />
       <About />
       <Skills />

@@ -8,8 +8,8 @@ const SkillCategory = ({ title, skills, colorClass }: { title: string, skills: s
   return (
     <motion.div 
       variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
       }}
       className="p-6 sm:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-sm hover:bg-white/5 transition-all w-full"
     >
@@ -31,7 +31,7 @@ const SkillCategory = ({ title, skills, colorClass }: { title: string, skills: s
 };
 
 const Skills = () => {
-  const { frontend, backend, database, tools } = resumeData.skills;
+  const { languages, frontend, backend, databases, ai, tools } = resumeData.skills;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,16 +68,18 @@ const Skills = () => {
         </div>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
+          <SkillCategory title="Core Languages" skills={languages} colorClass="from-yellow-400 to-orange-500" />
           <SkillCategory title="Frontend Development" skills={frontend} colorClass="from-cyan-400 to-blue-500" />
           <SkillCategory title="Backend & APIs" skills={backend} colorClass="from-emerald-400 to-teal-600" />
-          <SkillCategory title="Database" skills={database} colorClass="from-purple-400 to-indigo-600" />
-          <SkillCategory title="Tools & Workflow" skills={tools} colorClass="from-orange-400 to-red-500" />
+          <SkillCategory title="Databases" skills={databases} colorClass="from-purple-400 to-indigo-600" />
+          <SkillCategory title="AI & Integration" skills={ai} colorClass="from-pink-400 to-rose-600" />
+          <SkillCategory title="Tools & Workflow" skills={tools} colorClass="from-red-400 to-red-500" />
         </motion.div>
       </div>
     </section>

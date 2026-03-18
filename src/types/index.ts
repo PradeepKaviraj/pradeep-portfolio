@@ -1,64 +1,69 @@
-export interface PersonalData {
-  name: string;
-  role: string;
-  tagline: string;
-  location: string;
-  email: string;
-  phone: string;
-  github: string;
+export interface PersonalLinks {
   linkedin: string;
+  github: string;
   portfolio: string;
 }
 
-export interface Summary {
-  description: string;
-  highlights: string[];
+export interface PersonalInfo {
+  name: string;
+  title: string;
+  phone: string;
+  email: string;
+  location: string;
+  links: PersonalLinks;
 }
 
 export interface Skills {
+  languages: string[];
   frontend: string[];
   backend: string[];
-  database: string[];
+  databases: string[];
+  ai: string[];
   tools: string[];
 }
 
 export interface Project {
-  title: string;
-  type: string;
-  description: string;
-  techStack: string[];
-  features: string[];
-  live?: string;
-  github?: string;
+  name: string;
+  tech: string[];
+  link?: string;
+  description: string[];
+  status?: string;
 }
 
 export interface Experience {
   role: string;
   company: string;
-  location: string;
   duration: string;
-  highlights: string[];
+  location: string;
+  points: string[];
 }
 
 export interface Education {
   degree: string;
   college: string;
   duration: string;
+  cgpa?: string;
 }
 
 export interface Certification {
-  title: string;
+  name: string;
   year?: string;
   status?: string;
-  organization?: string;
+}
+
+export interface Language {
+  name: string;
+  level: string;
 }
 
 export interface ResumeData {
-  personal: PersonalData;
-  summary: Summary;
+  personalInfo: PersonalInfo;
+  summary: string;
   skills: Skills;
   projects: Project[];
   experience: Experience[];
   education: Education[];
   certifications: Certification[];
+  strengths: string[];
+  languages: Language[];
 }

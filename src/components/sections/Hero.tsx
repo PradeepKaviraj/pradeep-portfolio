@@ -1,12 +1,23 @@
 "use client";
 
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, Variants, useScroll, useTransform } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 import Link from 'next/link';
 
 const Hero = () => {
-  const { name, role, tagline } = resumeData.personal;
+  const { name, title } = resumeData.personalInfo;
+  const tagline = resumeData.summary.split('.')[0] + '.';
+
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+  
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -20,17 +31,18 @@ const Hero = () => {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0, 0, 0.58, 1] } },
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } },
   };
 
   return (
-    <section id="hero" className="min-h-[100dvh] flex flex-col items-center justify-center bg-black text-white px-6 sm:px-8 relative overflow-hidden">
+    <section ref={containerRef} id="hero" className="min-h-[100dvh] flex flex-col items-center justify-center bg-black text-white px-6 sm:px-8 relative overflow-hidden">
       {/* Background Glows */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-cyan-600/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
+      <motion.div style={{ scale: glowScale }} className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
+      <motion.div style={{ scale: glowScale }} className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-cyan-600/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
 
       <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-10 text-center max-w-5xl mx-auto w-full pt-20"
         variants={containerVariants}
         initial="hidden"
@@ -44,10 +56,10 @@ const Hero = () => {
 
         <motion.h1 variants={itemVariants} className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight mb-6 leading-tight">
           <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-            {role.split(" ")[0]}
+            {title.split(" ")[0]}
           </span>
           <br />
-          <span className="text-white">{role.split(" ").slice(1).join(" ")}</span>
+          <span className="text-white">{title.split(" ").slice(1).join(" ")}</span>
         </motion.h1>
 
         <motion.p variants={itemVariants} className="text-lg sm:text-xl md:text-2xl text-zinc-400 mb-10 max-w-3xl mx-auto leading-relaxed">

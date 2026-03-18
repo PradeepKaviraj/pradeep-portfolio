@@ -1,99 +1,84 @@
 import { ResumeData } from "@/types";
 
 export const resumeData: ResumeData = {
-  personal: {
+  personalInfo: {
     name: "Pradeep Kaviraj",
-    role: "Frontend Engineer",
-    tagline: "Building scalable, high-performance web applications with modern UI/UX",
-    location: "Bengaluru, India",
-    email: "pradeepmvk12@gmail.com",
+    title: "Full Stack Developer",
     phone: "+91 93636 23774",
-    github: "https://github.com/PradeepKaviraj",
-    linkedin: "https://linkedin.com/in/pradeep-kaviraj-283259324",
-    portfolio: "https://creative-academy-sepia.vercel.app"
+    email: "pradeepmvk12@gmail.com",
+    location: "Bengaluru, Karnataka",
+    links: {
+      linkedin: "https://linkedin.com/in/pradeep-kaviraj-283259324",
+      github: "https://github.com/PradeepKaviraj",
+      portfolio: "https://pradeep-portfolio-lovat-chi.vercel.app"
+    }
   },
 
-  summary: {
-    description:
-      "Frontend-focused JavaScript developer specializing in React.js, Next.js, and TypeScript with real-world experience building scalable, production-ready applications. Strong in component architecture, performance optimization, and responsive UI development.",
-    highlights: [
-      "6-month internship delivering production-level applications",
-      "Strong in reusable component architecture",
-      "Experience with REST APIs and client-server data flow",
-      "Focus on performance optimization and clean code"
-    ]
-  },
+  summary: "Full Stack JavaScript Developer with experience building production-grade web applications using React.js, Next.js 14, TypeScript, and Node.js. Skilled in reusable component architecture, REST APIs, Redux Toolkit, and responsive UI development. Built an AI-powered portfolio with LLM chatbot integration.",
 
   skills: {
-    frontend: [
-      "React.js",
-      "Next.js (App Router)",
-      "TypeScript",
-      "Tailwind CSS",
-      "Redux Toolkit",
-      "HTML5",
-      "CSS3"
-    ],
-    backend: [
-      "Node.js",
-      "Express.js",
-      "REST APIs"
-    ],
-    database: [
-      "MySQL",
-      "MongoDB"
-    ],
-    tools: [
-      "Git",
-      "GitHub",
-      "Vercel",
-      "VS Code",
-      "Figma"
-    ]
+    languages: ["JavaScript (ES6+)", "TypeScript", "SQL", "HTML5", "CSS3"],
+    frontend: ["React.js", "Next.js 14", "Redux Toolkit", "Tailwind CSS", "Framer Motion", "Responsive Design"],
+    backend: ["Node.js", "Express.js", "REST APIs", "Nodemailer"],
+    databases: ["MySQL", "MongoDB"],
+    ai: ["OpenRouter API", "Prompt Engineering", "AI Chatbot Development", "Streaming Responses"],
+    tools: ["Git", "GitHub", "Vercel", "VS Code", "Figma", "Postman"]
   },
 
   projects: [
     {
-      title: "Creative Academy",
-      type: "Frontend Application",
-      description:
-        "A modern educational platform with interactive UI, smooth animations, and responsive design.",
-      techStack: ["Next.js", "Tailwind CSS", "Framer Motion"],
-      features: [
-        "Built fully responsive UI across all devices",
-        "Implemented smooth animations and transitions",
-        "Optimized performance using lazy loading and efficient component structuring",
-        "Used Next.js App Router with dynamic routing"
-      ],
-      live: "https://creative-academy-sepia.vercel.app",
-      github: "https://github.com/PradeepKaviraj/creative-academy"
+      name: "AI-Powered Developer Portfolio",
+      tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "OpenRouter API"],
+      link: "https://pradeep-portfolio-lovat-chi.vercel.app",
+      description: [
+        "Built full-stack portfolio with real-time AI chatbot",
+        "Implemented streaming API using Next.js backend",
+        "Custom system prompt with strict response control",
+        "Created reusable chat hook for frontend state",
+        "Developed 6 responsive sections"
+      ]
     },
     {
-      title: "Prison Management System",
-      type: "Full Stack Application",
-      description:
-        "A full-stack system for managing prisoner and staff records with complete CRUD operations.",
-      techStack: ["React.js", "Node.js", "Express.js", "MySQL"],
-      features: [
-        "Handled multiple data modules with CRUD operations",
-        "Designed MySQL database schema",
-        "Built REST APIs for seamless client-server communication",
-        "Developed 15+ reusable React components",
-        "Improved UI consistency and performance"
-      ],
-      github: "https://github.com/PradeepKaviraj"
+      name: "Parents Choice — Insurance Platform",
+      tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "Nodemailer"],
+      link: "https://parentschoices.in",
+      description: [
+        "Built client-facing insurance platform",
+        "Created reusable UI components",
+        "Implemented animations with Framer Motion",
+        "Integrated email service using Nodemailer",
+        "Fully responsive design"
+      ]
     },
     {
-      title: "Learning Management System",
-      type: "Full Stack Application (In Progress)",
-      description:
-        "A scalable LMS platform with admin workflows and structured course management.",
-      techStack: ["Next.js", "TypeScript", "Redux Toolkit", "Tailwind CSS"],
-      features: [
-        "Designed modular and scalable architecture",
-        "Implemented global state management using Redux Toolkit",
-        "Built admin workflows for course scheduling",
-        "Integrated XLSX bulk data upload"
+      name: "Creative Academy",
+      tech: ["Next.js", "JavaScript", "Tailwind CSS"],
+      link: "https://creative-academy-sepia.vercel.app",
+      description: [
+        "Course discovery platform with dynamic routing",
+        "Converted Figma designs to UI",
+        "Optimized performance using lazy loading"
+      ]
+    },
+    {
+      name: "Prison Management System",
+      tech: ["React.js", "Node.js", "Express.js", "MySQL"],
+      description: [
+        "Full-stack CRUD system",
+        "Designed normalized database",
+        "Built REST APIs",
+        "Created reusable components"
+      ]
+    },
+    {
+      name: "Learning Management System",
+      tech: ["Next.js 14", "TypeScript", "Redux Toolkit", "Tailwind CSS"],
+      status: "In Progress",
+      description: [
+        "Scalable LMS architecture",
+        "Bulk data upload via XLSX",
+        "Admin workflows",
+        "Dashboard analytics with charts"
       ]
     }
   ],
@@ -102,35 +87,52 @@ export const resumeData: ResumeData = {
     {
       role: "Software Developer Intern",
       company: "NxDesignz Studio Pvt. Ltd.",
-      location: "Bengaluru, India",
-      duration: "June 2024 – December 2024",
-      highlights: [
-        "Developed 3+ production-level web applications",
-        "Built reusable UI components with modular architecture",
-        "Worked with Git workflows and team collaboration",
-        "Deployed applications using Vercel",
-        "Improved responsiveness and fixed UI/UX issues"
+      duration: "July 2025 – January 2026",
+      location: "Bengaluru",
+      points: [
+        "Worked on 3+ production projects",
+        "Built reusable UI components",
+        "Integrated REST APIs",
+        "Used Git workflows and code reviews",
+        "Deployed apps on Vercel",
+        "Converted Figma designs to code"
       ]
     }
   ],
 
   education: [
     {
-      degree: "Bachelor of Computer Applications (BCA)",
-      college: "SSMRV College",
-      duration: "2022 – 2025"
+      degree: "Bachelor of Computer Applications",
+      college: "SSMRV College, Bengaluru",
+      duration: "2022 – 2025",
+      cgpa: "8.09"
     }
   ],
 
   certifications: [
     {
-      title: "Advanced Diploma in Data Center Architecture",
-      year: "2024"
+      name: "Advanced Diploma in Data Center Architecture",
+      year: "2025"
     },
     {
-      title: "Full Stack Development Program",
-      status: "In Progress",
-      organization: "NxDesignz Studio Pvt. Ltd."
+      name: "Full Stack Development Program",
+      status: "In Progress"
     }
+  ],
+
+  strengths: [
+    "Full-stack development",
+    "Reusable component architecture",
+    "AI integration",
+    "Responsive UI design",
+    "API integration",
+    "Performance optimization",
+    "Clean code practices"
+  ],
+
+  languages: [
+    { name: "Tamil", level: "Native" },
+    { name: "English", level: "Professional" },
+    { name: "Kannada", level: "Conversational" }
   ]
 };
