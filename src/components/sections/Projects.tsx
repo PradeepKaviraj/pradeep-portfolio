@@ -1,28 +1,28 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 
 const Projects = () => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
       transition: { staggerChildren: 0.15, delayChildren: 0.2 }
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.95, y: 30 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.42, 0, 0.58, 1] } }
   };
 
   return (
     <section id="projects" className="py-24 md:py-32 bg-zinc-950 text-white relative">
       <div className="container mx-auto px-6 sm:px-8 max-w-7xl">
         <div className="mb-16 md:mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -30,7 +30,7 @@ const Projects = () => {
           >
             Featured <span className="text-purple-500">Works</span>.
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -41,7 +41,7 @@ const Projects = () => {
           </motion.p>
         </div>
 
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
           variants={containerVariants}
           initial="hidden"
@@ -49,8 +49,8 @@ const Projects = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           {resumeData.projects.map((project, i) => (
-            <motion.div 
-              key={i} 
+            <motion.div
+              key={i}
               variants={itemVariants}
               className="group flex flex-col h-full bg-black rounded-[2rem] border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all shadow-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]"
             >
@@ -63,11 +63,11 @@ const Projects = () => {
                   <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
                 </div>
               </div>
-              
+
               <div className="p-6 sm:p-8 flex flex-col flex-1">
                 <h3 className="text-2xl font-bold mb-3 group-hover:text-purple-400 transition-colors tracking-tight">{project.title}</h3>
                 <p className="text-zinc-400 mb-6 leading-relaxed flex-1">{project.description}</p>
-                
+
                 <div className="mb-6 space-y-2">
                   <h4 className="text-sm font-bold text-white mb-2">Key Features:</h4>
                   <ul className="text-sm text-zinc-500 space-y-1">
@@ -89,7 +89,7 @@ const Projects = () => {
                     </span>
                   ))}
                 </div>
-                
+
                 <div className="pt-6 border-t border-white/10 flex gap-4 mt-auto">
                   {project.live && (
                     <a href={project.live} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors text-sm">

@@ -27,8 +27,7 @@ When anyone asks about profiles, projects, resume, or contact — respond with t
 Available links:
 - GitHub: [GitHub Profile](${resumeData.personal.github})
 - LinkedIn: [LinkedIn Profile](${resumeData.personal.linkedin})
-- Resume: [Download Resume](${resumeData.personal.resumeUrl})
-${resumeData.projects?.map((p: { name: string; liveUrl: string }) => `- ${p.name}: [Live Demo](${p.liveUrl})`).join("\n")}
+${resumeData.projects?.map((p) => p.live ? `- ${p.title}: [Live Demo](${p.live})` : `- ${p.title}`).join("\n")}
 
 ## STRICT RULES
 - ONLY use the data provided below. Never make up facts.
