@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-// @ts-expect-error type missing
 import Lenis from "lenis";
 
 export default function SmoothScroll({
