@@ -7,7 +7,7 @@ import SmoothScroll from "@/components/common/SmoothScroll";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Premium Portfolio | Digital Clone",
+  title: "Pradeep Kaviraj Portfolio",
   description: "A showcase of high-end web development projects and personal brand.",
 };
 
