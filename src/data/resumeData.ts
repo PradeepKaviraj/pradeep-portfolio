@@ -28,7 +28,7 @@ export const resumeData: ResumeData = {
   projects: [
     {
       name: "AI-Powered Developer Portfolio",
-      tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "OpenRouter API"],
+      tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "OpenRouter API", "Nodemailer"],
       link: "https://pradeep-portfolio-lovat-chi.vercel.app",
       description: [
         "Built full-stack portfolio with real-time AI chatbot",
@@ -60,6 +60,19 @@ export const resumeData: ResumeData = {
         "Optimized performance using lazy loading"
       ]
     },
+
+    {
+      name: "Learning Management System",
+      tech: ["Next.js 14", "TypeScript", "Redux Toolkit", "Tailwind CSS"],
+      link: "https://github.com/PradeepKaviraj/lms-clients",
+      status: "In Progress",
+      description: [
+        "Scalable LMS architecture",
+        "Bulk data upload via XLSX",
+        "Admin workflows",
+        "Dashboard analytics with charts"
+      ]
+    },
     {
       name: "Prison Management System",
       tech: ["React.js", "Node.js", "Express.js", "MySQL"],
@@ -68,17 +81,6 @@ export const resumeData: ResumeData = {
         "Designed normalized database",
         "Built REST APIs",
         "Created reusable components"
-      ]
-    },
-    {
-      name: "Learning Management System",
-      tech: ["Next.js 14", "TypeScript", "Redux Toolkit", "Tailwind CSS"],
-      status: "In Progress",
-      description: [
-        "Scalable LMS architecture",
-        "Bulk data upload via XLSX",
-        "Admin workflows",
-        "Dashboard analytics with charts"
       ]
     }
   ],
