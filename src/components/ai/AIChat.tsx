@@ -5,16 +5,53 @@ import { useChat } from '@/hooks/useChat';
 import { resumeData } from '@/data/resumeData';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const BUTTON_SIZE = 60;
+const EDGE_PADDING = 24;
+const DEFAULT_CHAT_WIDTH = 380;
+const DEFAULT_CHAT_HEIGHT = 560;
+
 const AIChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const { messages, sendMessage, isLoading } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom of chat
+  // Mounted & Window size
+  const [mounted, setMounted] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 1200, height: 800 });
+
+  useEffect(() => {
+    setMounted(true);
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const { width: innerWidth, height: innerHeight } = windowSize;
+  const CHAT_WIDTH = Math.min(DEFAULT_CHAT_WIDTH, innerWidth - (EDGE_PADDING * 2));
+  const CHAT_HEIGHT = Math.min(DEFAULT_CHAT_HEIGHT, innerHeight - 120);
+
+  // Auto scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
+
+  // Click outside to close
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleClickOutside = (e: PointerEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('pointerdown', handleClickOutside);
+    return () => document.removeEventListener('pointerdown', handleClickOutside);
+  }, [isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,22 +60,37 @@ const AIChat = () => {
     setInput('');
   };
 
+  if (!mounted) return null;
+
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
+      {/* Chat Panel */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="w-[350px] sm:w-[400px] h-[550px] sm:h-[600px] bg-zinc-950 border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden mb-4"
+          <motion.div
+            ref={panelRef}
+            initial={{ opacity: 0, scale: 0.8, y: 20, transformOrigin: 'bottom right' }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 350 }}
+            style={{
+              position: 'fixed',
+              bottom: EDGE_PADDING + BUTTON_SIZE + 12,
+              right: EDGE_PADDING,
+              width: CHAT_WIDTH,
+              height: CHAT_HEIGHT,
+              zIndex: 100,
+              pointerEvents: 'auto',
+            }}
+            className="bg-zinc-950 border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden"
           >
-            {/* Chat Header */}
+            {/* Header */}
             <div className="p-4 sm:p-5 border-b border-white/10 flex justify-between items-center bg-zinc-900/80 backdrop-blur-md shrink-0">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-xl shadow-lg">👨‍💻</div>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-xl shadow-lg">
+                    👨‍💻
+                  </div>
                   <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-zinc-900 rounded-full" />
                 </div>
                 <div>
@@ -46,73 +98,78 @@ const AIChat = () => {
                   <p className="text-xs text-emerald-400 font-medium">Digital Clone Online</p>
                 </div>
               </div>
-              <button 
-                onClick={() => setIsOpen(false)} 
+              <button
+                onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
                 className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
                 aria-label="Close chat"
               >
                 &times;
               </button>
             </div>
-            
-            {/* Messages Area */}
-            <div className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 bg-zinc-950/50 scroll-smooth">
+
+            {/* Messages */}
+            <div
+              data-lenis-prevent
+              className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 bg-zinc-950/50 scroll-smooth shadow-inner"
+            >
               {messages.length === 0 && (
                 <div className="text-center text-zinc-500 mt-10 text-sm">
                   <p className="mb-2">👋 Hi! I&apos;m the digital clone of {resumeData.personalInfo.name}.</p>
-                  <p>Ask me about his skills, experience, or projects!</p>
+                  <p>Ask me about my skills, experience, or projects!</p>
                 </div>
               )}
-              
+
               {messages.map((msg, idx) => (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  key={idx} 
+                  key={idx}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`p-3 sm:p-4 text-sm sm:text-base max-w-[85%] leading-relaxed ${
-                    msg.role === 'user' 
-                      ? 'bg-blue-600 text-white rounded-2xl rounded-tr-sm' 
-                      : 'bg-zinc-800 text-zinc-200 rounded-2xl rounded-tl-sm border border-white/5'
-                  }`}>
+                  <div className={`p-3 sm:p-4 text-sm sm:text-base max-w-[85%] leading-relaxed ${msg.role === 'user'
+                    ? 'bg-blue-600 text-white rounded-2xl rounded-tr-sm'
+                    : 'bg-zinc-800 text-zinc-200 rounded-2xl rounded-tl-sm border border-white/5'
+                    }`}>
                     {msg.content}
                   </div>
                 </motion.div>
               ))}
 
-              {/* Loading Indicator */}
               {isLoading && (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex justify-start"
-                >
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
                   <div className="p-4 bg-zinc-800 rounded-2xl rounded-tl-sm border border-white/5 flex gap-1.5 items-center">
-                    <motion.div className="w-2 h-2 rounded-full bg-zinc-500" animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
-                    <motion.div className="w-2 h-2 rounded-full bg-zinc-500" animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
-                    <motion.div className="w-2 h-2 rounded-full bg-zinc-500" animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
+                    {[0, 0.2, 0.4].map((delay, i) => (
+                      <motion.div
+                        key={i}
+                        className="w-2 h-2 rounded-full bg-zinc-500"
+                        animate={{ y: [0, -5, 0] }}
+                        transition={{ duration: 0.6, repeat: Infinity, delay }}
+                      />
+                    ))}
                   </div>
                 </motion.div>
               )}
               <div ref={messagesEndRef} />
             </div>
-            
-            {/* Input Form */}
+
+            {/* Input */}
             <div className="p-4 border-t border-white/10 bg-zinc-900/50 shrink-0">
-              <form onSubmit={handleSubmit} className="flex gap-2">
-                <input 
-                  type="text" 
+              <form
+                onSubmit={handleSubmit}
+                className="flex gap-2"
+              >
+                <input
+                  type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask me anything..." 
+                  placeholder="Ask me anything..."
                   disabled={isLoading}
-                  className="flex-1 bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 sm:py-2 outline-none focus:border-blue-500 transition-colors text-white placeholder:text-zinc-500 text-sm disabled:opacity-50" 
+                  className="flex-1 bg-zinc-800 border border-white/10 rounded-xl px-4 py-3 sm:py-2 outline-none focus:border-blue-500 transition-colors text-white placeholder:text-zinc-500 text-sm disabled:opacity-50"
                 />
-                <button 
+                <button
                   type="submit"
                   disabled={isLoading || !input.trim()}
-                  className="bg-blue-600 px-4 py-2 rounded-xl text-white font-bold hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="bg-blue-600 px-4 py-2 rounded-xl text-white font-bold hover:bg-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center h-10 w-10 sm:h-auto sm:w-auto"
                   aria-label="Send message"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -125,24 +182,29 @@ const AIChat = () => {
         )}
       </AnimatePresence>
 
-      {/* Floating Toggle Button */}
-      {!isOpen && (
-        <motion.button 
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          whileHover={{ scale: 1.1 }}
+      {/* Floating Button */}
+      <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 pointer-events-auto">
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          whileHover={{ scale: 1.15 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => setIsOpen(true)}
-          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-600 flex items-center justify-center text-2xl sm:text-3xl shadow-[0_0_30px_rgba(37,99,235,0.4)] relative group"
-          aria-label="Open AI Assistant"
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          className="w-[60px] h-[60px] rounded-full bg-blue-600 flex items-center justify-center text-3xl shadow-[0_0_30px_rgba(37,99,235,0.4)] relative select-none group"
+          aria-label={isOpen ? "Close chat" : "Open chat"}
         >
           <span className="absolute -top-1 -right-1 flex h-4 w-4">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-zinc-950"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-4 w-4 bg-emerald-500 border-2 border-zinc-950 group-hover:bg-emerald-300 transition-colors" />
           </span>
-          💬
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.span key="close" initial={{ opacity: 0, rotate: -90 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 90 }}>×</motion.span>
+            ) : (
+              <motion.span key="open" initial={{ opacity: 0, rotate: 90 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: -90 }}>💬</motion.span>
+            )}
+          </AnimatePresence>
         </motion.button>
-      )}
+      </div>
     </div>
   );
 };

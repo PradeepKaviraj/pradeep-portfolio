@@ -2,6 +2,7 @@ export interface PersonalLinks {
   linkedin: string;
   github: string;
   portfolio: string;
+  resume?: string;
 }
 
 export interface PersonalInfo {

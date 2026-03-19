@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Menu, X } from "lucide-react";
+import { Github, Linkedin, Menu, X, Download } from "lucide-react";
 import { resumeData } from "@/data/resumeData";
 
 const navLinks = [
@@ -117,6 +117,17 @@ export default function Navbar() {
               >
                 <Linkedin size={18} />
               </a>
+              <a
+                href={resumeData.personalInfo.links.resume}
+                download="Pradeep_Kaviraj_Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black text-sm font-semibold hover:bg-white/80 transition-colors"
+                aria-label="Download Resume"
+              >
+                <Download size={16} />
+                <span>Resume</span>
+              </a>
             </div>
           </div>
 
@@ -172,6 +183,16 @@ export default function Navbar() {
               >
                 <Linkedin size={24} />
                 <span>LinkedIn</span>
+              </a>
+              <a
+                href={resumeData.personalInfo.links.resume}
+                download="Pradeep_Kaviraj_Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 text-white/80 hover:text-white"
+              >
+                <Download size={24} />
+                <span>Resume</span>
               </a>
             </div>
           </motion.div>

@@ -68,7 +68,7 @@ const Contact = () => {
     <section id="contact" className="py-24 md:py-32 bg-zinc-950 text-white relative">
       <div className="container mx-auto px-6 sm:px-8 max-w-6xl">
         <motion.div 
-          className="rounded-[2.5rem] sm:rounded-[3rem] border border-white/10 bg-gradient-to-br from-zinc-900 to-black p-8 sm:p-12 md:p-20 relative overflow-hidden shadow-2xl"
+          className="rounded-[2.5rem] sm:rounded-[3rem] border border-white/10 bg-gradient-to-br from-zinc-900 to-black p-6 sm:p-12 md:p-20 relative overflow-hidden shadow-2xl"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -94,9 +94,9 @@ const Contact = () => {
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl sm:text-2xl group-hover:bg-blue-500/20 group-hover:border-blue-500/50 group-hover:text-blue-400 transition-all shadow-sm">
                     📧
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-zinc-500 text-sm font-medium mb-1 uppercase tracking-wider">Email</p>
-                    <p className="text-lg sm:text-xl font-bold text-zinc-200 group-hover:text-white transition-colors">{email}</p>
+                    <p className="text-lg sm:text-xl font-bold text-zinc-200 group-hover:text-white transition-colors break-all sm:break-normal">{email}</p>
                   </div>
                 </a>
 
@@ -104,9 +104,9 @@ const Contact = () => {
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl sm:text-2xl group-hover:bg-cyan-500/20 group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all shadow-sm">
                     📱
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-zinc-500 text-sm font-medium mb-1 uppercase tracking-wider">Phone</p>
-                    <p className="text-lg sm:text-xl font-bold text-zinc-200 group-hover:text-white transition-colors">{phone}</p>
+                    <p className="text-lg sm:text-xl font-bold text-zinc-200 group-hover:text-white transition-colors break-all sm:break-normal">{phone}</p>
                   </div>
                 </div>
 
@@ -122,12 +122,15 @@ const Contact = () => {
               </div>
 
               {/* Social Links */}
-              <div className="mt-12 pt-8 border-t border-white/10 flex gap-4">
-                <a href={github} target="_blank" rel="noreferrer" className="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold flex items-center gap-2 transition-colors">
+              <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-4">
+                <a href={github} target="_blank" rel="noreferrer" className="flex-1 min-w-[140px] px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors text-sm sm:text-base">
                   GitHub ↗
                 </a>
-                <a href={linkedin} target="_blank" rel="noreferrer" className="px-6 py-3 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-400 rounded-xl font-bold flex items-center gap-2 transition-colors">
+                <a href={linkedin} target="_blank" rel="noreferrer" className="flex-1 min-w-[140px] px-6 py-3 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-blue-400 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors text-sm sm:text-base">
                   LinkedIn ↗
+                </a>
+                <a href={resumeData.personalInfo.links.resume} download="Pradeep_Kaviraj_Resume.pdf" className="flex-1 min-w-[140px] px-6 py-3 bg-zinc-800 hover:bg-zinc-700 border border-white/10 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-colors text-sm sm:text-base">
+                  Resume ↓
                 </a>
               </div>
             </motion.div>

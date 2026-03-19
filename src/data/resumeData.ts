@@ -10,7 +10,8 @@ export const resumeData: ResumeData = {
     links: {
       linkedin: "https://linkedin.com/in/pradeep-kaviraj-283259324",
       github: "https://github.com/PradeepKaviraj",
-      portfolio: "https://pradeep-portfolio-lovat-chi.vercel.app"
+      portfolio: "https://pradeep-portfolio-lovat-chi.vercel.app",
+      resume: "/Pradeep_Kaviraj_Resume.pdf"
     }
   },
 
