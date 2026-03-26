@@ -11,13 +11,14 @@ const About = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
+      willChange: "opacity"
     }
   };
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.98 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }, willChange: "transform, opacity" }
   };
 
   return (
@@ -35,7 +36,7 @@ const About = () => {
         >
           {/* Left Side - Visual / Stats */}
           <motion.div variants={itemVariants} className="w-full lg:w-5/12 relative group">
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-600/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-700" />
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-600/20 rounded-3xl blur-xl md:blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-700" />
             <div className="relative aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 bg-zinc-900 flex flex-col items-center justify-center p-8 text-center glass">
 
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-4xl sm:text-5xl mb-6 shadow-xl">

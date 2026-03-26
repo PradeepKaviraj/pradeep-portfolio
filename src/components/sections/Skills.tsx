@@ -9,7 +9,7 @@ const SkillCategory = ({ title, skills, colorClass }: { title: string, skills: s
     <motion.div 
       variants={{
         hidden: { opacity: 0, y: 30, scale: 0.95 },
-        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }, willChange: "transform, opacity" }
       }}
       className="p-6 sm:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-sm hover:bg-white/5 transition-all w-full"
     >
@@ -37,14 +37,15 @@ const Skills = () => {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+      willChange: "opacity"
     }
   };
 
   return (
     <section id="skills" className="py-24 md:py-32 bg-black text-white relative">
       {/* Background Effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] max-w-[800px] bg-blue-900/10 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] max-w-[800px] bg-blue-900/10 blur-[60px] md:blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 sm:px-8 max-w-7xl relative z-10">
         <div className="text-center mb-16 md:mb-20">

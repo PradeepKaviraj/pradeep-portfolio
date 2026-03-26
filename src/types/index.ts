@@ -21,6 +21,7 @@ export interface Skills {
   databases: string[];
   ai: string[];
   tools: string[];
+  core: string[];
 }
 
 export interface Project {
@@ -29,6 +30,7 @@ export interface Project {
   link?: string;
   description: string[];
   status?: string;
+  featured?: boolean;
 }
 
 export interface Experience {

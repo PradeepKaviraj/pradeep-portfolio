@@ -18,6 +18,7 @@ const Experience = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+            style={{ willChange: "transform, opacity" }}
             key={i} 
             className="relative pl-8 md:pl-0"
           >
@@ -55,6 +56,7 @@ const Experience = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+            style={{ willChange: "transform, opacity" }}
             key={i} 
             className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-cyan-500/30 transition-all shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 group"
           >
@@ -78,6 +80,7 @@ const Experience = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+            style={{ willChange: "transform, opacity" }}
             key={i} 
             className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-purple-500/30 transition-all shadow-lg group relative overflow-hidden"
           >

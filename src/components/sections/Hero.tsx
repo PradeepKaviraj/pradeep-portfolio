@@ -27,22 +27,23 @@ const Hero = () => {
         staggerChildren: 0.2,
         delayChildren: 0.3,
       },
+      willChange: "opacity, transform",
     },
   };
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }, willChange: "opacity, transform" },
   };
 
   return (
     <section ref={containerRef} id="hero" className="min-h-[100dvh] flex flex-col items-center justify-center bg-black text-white px-6 sm:px-8 relative overflow-hidden">
       {/* Background Glows */}
-      <motion.div style={{ scale: glowScale }} className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
-      <motion.div style={{ scale: glowScale }} className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-cyan-600/10 blur-[100px] md:blur-[150px] rounded-full pointer-events-none" />
+      <motion.div style={{ scale: glowScale, willChange: "transform" }} className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 blur-[50px] md:blur-[150px] rounded-full pointer-events-none" />
+      <motion.div style={{ scale: glowScale, willChange: "transform" }} className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-cyan-600/10 blur-[50px] md:blur-[150px] rounded-full pointer-events-none" />
 
       <motion.div
-        style={{ y: contentY, opacity: contentOpacity }}
+        style={{ y: contentY, opacity: contentOpacity, willChange: "transform, opacity" }}
         className="relative z-10 text-center max-w-5xl mx-auto w-full pt-20"
         variants={containerVariants}
         initial="hidden"

@@ -10,14 +10,15 @@ const Contact = () => {
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }, willChange: "transform, opacity" }
   };
 
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.98 },
     visible: { 
       opacity: 1, y: 0, scale: 1,
-      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.15 } 
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1], staggerChildren: 0.15 },
+      willChange: "transform, opacity"
     }
   };
 
@@ -75,8 +76,8 @@ const Contact = () => {
           variants={containerVariants}
         >
           {/* Decorative Background Blur */}
-          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-blue-600/10 blur-[80px] sm:blur-[100px] -mr-32 -mt-32 rounded-full pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-cyan-600/10 blur-[80px] sm:blur-[100px] -ml-32 -mb-32 rounded-full pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 sm:w-96 sm:h-96 bg-blue-600/10 blur-[40px] md:blur-[100px] -mr-32 -mt-32 rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 sm:w-96 sm:h-96 bg-cyan-600/10 blur-[40px] md:blur-[100px] -ml-32 -mb-32 rounded-full pointer-events-none" />
           
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             
