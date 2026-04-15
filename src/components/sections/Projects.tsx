@@ -4,32 +4,58 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 
+const HighlightedText = ({ text }: { text: string }) => {
+  const terms = ["REST APIs", "JWT authentication", "MongoDB schema", "real-time streaming", "backend APIs"];
+  const regex = new RegExp(`(${terms.join('|')})`, 'gi');
+  const parts = text.split(regex);
+  
+  return (
+    <span>
+      {parts.map((part, i) => 
+        terms.some(t => t.toLowerCase() === part.toLowerCase()) 
+          ? <strong key={i} className="text-blue-400 font-bold">{part}</strong> 
+          : part
+      )}
+    </span>
+  );
+};
+
 const Projects = () => {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
       willChange: "opacity"
     }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 40 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }, willChange: "opacity, transform" }
+    hidden: { opacity: 0, scale: 0.98, y: 20 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" }, willChange: "opacity, transform" }
   };
 
+  // Ensure featured projects are listed first
+  const sortedProjects = [...resumeData.projects].sort((a, b) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return 0;
+  });
+
   return (
-    <section id="projects" className="py-24 md:py-32 bg-zinc-950 text-white relative">
-      <div className="container mx-auto px-6 sm:px-8 max-w-7xl">
-        <div className="mb-16 md:mb-20">
+    <section id="projects" className="py-24 bg-black text-white relative border-t border-white/5">
+      <div className="container mx-auto px-6 sm:px-8 max-w-6xl">
+        <div className="mb-16">
+          <p className="text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase mb-4">
+            FEATURED PROJECT
+          </p>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4"
+            className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4"
           >
-            Featured <span className="text-purple-500">Works</span>.
+            Featured <span className="text-blue-500">Work</span>.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -38,68 +64,85 @@ const Projects = () => {
             transition={{ delay: 0.1 }}
             className="text-zinc-400 text-lg sm:text-xl max-w-2xl"
           >
-            A selection of projects that showcase my ability to build complete, scalable solutions from the ground up.
+            A selection of projects that showcase my backend expertise and full-stack capabilities.
           </motion.p>
         </div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {resumeData.projects.map((project, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="group flex flex-col h-full bg-black rounded-[2rem] border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all shadow-lg hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]"
-            >
-              {/* Top Banner indicating type */}
-              <div className="px-6 py-4 bg-zinc-900 border-b border-white/5 flex justify-between items-center">
-                <span className="text-xs font-bold uppercase tracking-wider text-purple-400">{project.status || 'Completed'}</span>
-                <div className="flex gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                </div>
-              </div>
+          {sortedProjects.map((project, i) => {
+            const isFeatured = project.featured;
+            
+            return (
+              <motion.div
+                key={i}
+                variants={itemVariants}
+                className={`flex flex-col bg-zinc-900 border overflow-hidden hover:scale-[1.02] transition-all duration-300 shadow-lg ${
+                  isFeatured 
+                  ? "lg:col-span-full lg:flex-row lg:items-center rounded-[2rem] border-blue-500/30 hover:border-blue-500/60 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] bg-gradient-to-br from-zinc-900 to-black p-2" 
+                  : "col-span-1 border-zinc-800 rounded-3xl hover:border-zinc-500"
+                }`}
+              >
+                <div className={`p-8 sm:p-10 flex flex-col flex-1 h-full`}>
+                  <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
+                    <h3 className={`font-bold text-white tracking-tight ${isFeatured ? "text-3xl sm:text-4xl lg:text-5xl" : "text-2xl"}`}>
+                      {project.name}
+                    </h3>
+                    {isFeatured && (
+                      <span className="px-4 py-1.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full text-xs font-bold uppercase tracking-[0.1em] shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                        Primary Project
+                      </span>
+                    )}
+                  </div>
 
-              <div className="p-6 sm:p-8 flex flex-col flex-1">
-                <h3 className="text-2xl font-bold mb-5 group-hover:text-purple-400 transition-colors tracking-tight">{project.name}</h3>
+                  {project.impact && (
+                    <p className={`text-zinc-300 font-medium leading-relaxed mb-8 ${isFeatured ? "text-xl text-blue-100/90" : "text-base"}`}>
+                      <HighlightedText text={project.impact} />
+                    </p>
+                  )}
 
-                <div className="mb-6 space-y-2 flex-1">
-                  <h4 className="text-sm font-bold text-white mb-3">Highlights:</h4>
-                  <ul className="text-sm text-zinc-400 space-y-2 leading-relaxed">
-                    {project.description.slice(0, 4).map((feature, idx) => (
-                      <li key={idx} className="flex gap-2">
-                        <span className="text-purple-500 shrink-0">▹</span> <span>{feature}</span>
+                  <ul className="text-zinc-400 space-y-4 leading-relaxed mb-10 flex-1">
+                    {project.description?.slice(0, 6).map((bullet, idx) => (
+                      <li key={idx} className="flex gap-4 text-sm sm:text-base items-start">
+                        <span className="text-blue-500 shrink-0 mt-0.5 opacity-80 font-bold">▹</span> 
+                        <span className="leading-relaxed">
+                          <HighlightedText text={bullet} />
+                        </span>
                       </li>
                     ))}
-                    {project.description.length > 4 && (
-                      <li className="text-purple-400/50 pl-4 text-xs italic">...and more</li>
-                    )}
                   </ul>
-                </div>
 
-                <div className="flex flex-wrap gap-2 mb-8 mt-auto">
-                  {project.tech.map(tag => (
-                    <span key={tag} className="text-xs font-bold px-3 py-1.5 bg-white/5 border border-white/5 rounded-full text-zinc-300">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                  <div className="mt-auto">
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {project.tech?.map(tag => (
+                        <span key={tag} className="text-xs font-bold px-3 py-1.5 bg-black border border-zinc-800 rounded-full text-zinc-300 uppercase tracking-wider">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-                <div className="pt-6 border-t border-white/10 flex gap-4">
-                  {project.link && (
-                    <a href={project.link} target="_blank" rel="noreferrer" className="flex-1 text-center py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors text-sm">
-                      View Project
-                    </a>
-                  )}
+                    <div className="pt-6 border-t border-zinc-800/50 flex flex-wrap gap-4">
+                      {project.link && (
+                        <a href={project.link} target="_blank" rel="noreferrer" className="px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-zinc-200 transition-colors text-sm shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                          View Live
+                        </a>
+                      )}
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noreferrer" className="px-8 py-3 bg-zinc-900 border border-zinc-700 text-white font-bold rounded-xl hover:bg-zinc-800 transition-colors text-sm">
+                          GitHub
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

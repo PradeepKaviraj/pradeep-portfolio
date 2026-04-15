@@ -4,23 +4,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 
-const SkillCategory = ({ title, skills, colorClass }: { title: string, skills: string[], colorClass: string }) => {
+const SkillCategory = ({ title, skills, isPrimary = false }: { title: string, skills: string[], isPrimary?: boolean }) => {
   return (
     <motion.div 
       variants={{
-        hidden: { opacity: 0, y: 30, scale: 0.95 },
-        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }, willChange: "transform, opacity" }
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" }, willChange: "transform, opacity" }
       }}
-      className="p-6 sm:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 backdrop-blur-sm hover:bg-white/5 transition-all w-full"
+      className={`p-6 sm:p-8 rounded-3xl border transition-all duration-300 hover:scale-[1.02] w-full relative ${
+        isPrimary 
+        ? "bg-gradient-to-br from-blue-900/20 to-zinc-900 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.1)] hover:border-blue-400" 
+        : "bg-zinc-900 border-zinc-800 hover:border-zinc-600"
+      }`}
     >
-      <h3 className={`text-xl sm:text-2xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r ${colorClass}`}>
-        {title}
-      </h3>
-      <div className="flex flex-wrap gap-2 sm:gap-3">
+      <div className="flex justify-between items-start mb-6">
+        <h3 className={`text-xl sm:text-2xl font-bold tracking-tight ${isPrimary ? "text-blue-400" : "text-white"}`}>
+          {title}
+        </h3>
+        {isPrimary && (
+          <span className="px-3 py-1 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+            Primary Strength
+          </span>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-2 text-zinc-300">
         {skills.map((skill) => (
           <span 
             key={skill} 
-            className="px-3 py-1.5 sm:px-4 sm:py-2 bg-white/5 border border-white/10 rounded-xl text-sm sm:text-base text-zinc-300 font-medium hover:text-white hover:border-white/20 transition-colors shadow-sm"
+            className={`px-4 py-2 ${isPrimary ? "bg-black/50 border border-blue-500/20 text-blue-100" : "bg-black border border-zinc-800 text-zinc-300"} rounded-xl text-sm sm:text-base font-medium whitespace-nowrap`}
           >
             {skill}
           </span>
@@ -31,29 +42,29 @@ const SkillCategory = ({ title, skills, colorClass }: { title: string, skills: s
 };
 
 const Skills = () => {
-  const { languages, frontend, backend, databases, ai, tools } = resumeData.skills;
+  const { core, backend, frontend, ai, devops, tools } = resumeData.skills;
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
       willChange: "opacity"
     }
   };
 
   return (
-    <section id="skills" className="py-24 md:py-32 bg-black text-white relative">
-      {/* Background Effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] max-w-[800px] bg-blue-900/10 blur-[60px] md:blur-[150px] rounded-full pointer-events-none" />
-
-      <div className="container mx-auto px-6 sm:px-8 max-w-7xl relative z-10">
-        <div className="text-center mb-16 md:mb-20">
+    <section id="skills" className="py-24 bg-black text-white relative border-t border-white/5">
+      <div className="container mx-auto px-6 sm:px-8 max-w-6xl">
+        <div className="mb-16">
+          <p className="text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase mb-4">
+            TECH STACK
+          </p>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4"
+            className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4"
           >
             Technical <span className="text-blue-500">Arsenal</span>.
           </motion.h2>
@@ -62,9 +73,9 @@ const Skills = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.1 }}
-            className="text-zinc-400 text-lg sm:text-xl max-w-2xl mx-auto"
+            className="text-zinc-400 text-lg sm:text-xl max-w-2xl"
           >
-            A comprehensive overview of the technologies and tools I use to build modern, high-performance applications.
+            A comprehensive overview of the technologies and tools I use to build robust applications.
           </motion.p>
         </div>
         
@@ -75,12 +86,13 @@ const Skills = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          <SkillCategory title="Core Languages" skills={languages} colorClass="from-yellow-400 to-orange-500" />
-          <SkillCategory title="Frontend Development" skills={frontend} colorClass="from-cyan-400 to-blue-500" />
-          <SkillCategory title="Backend & APIs" skills={backend} colorClass="from-emerald-400 to-teal-600" />
-          <SkillCategory title="Databases" skills={databases} colorClass="from-purple-400 to-indigo-600" />
-          <SkillCategory title="AI & Integration" skills={ai} colorClass="from-pink-400 to-rose-600" />
-          <SkillCategory title="Tools & Workflow" skills={tools} colorClass="from-red-400 to-red-500" />
+          {/* Order: 1. Backend, 2. Core, 3. AI, 4. DevOps, 5. Frontend, 6. Tools */}
+          <SkillCategory title="Backend & APIs" skills={backend} isPrimary={true} />
+          <SkillCategory title="Core Technologies" skills={core} />
+          <SkillCategory title="AI & Integration" skills={ai} />
+          <SkillCategory title="DevOps & Cloud" skills={devops} />
+          <SkillCategory title="Frontend Development" skills={frontend} />
+          <SkillCategory title="Tools & Workflow" skills={tools} />
         </motion.div>
       </div>
     </section>

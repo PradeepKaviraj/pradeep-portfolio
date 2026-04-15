@@ -3,189 +3,219 @@ import { ResumeData } from "@/types";
 export const resumeData: ResumeData = {
   personalInfo: {
     name: "Pradeep Kaviraj",
-    title: "Full Stack Developer",
+    title: "Full Stack Developer | Backend-Focused | AI Integration",
+    tagline: "Building scalable APIs and AI-powered applications using Next.js and Node.js",
     phone: "+91 9363623774",
     email: "pradeepmvk12@gmail.com",
-    location: "Bengaluru, Karnataka",
+    location: "Bengaluru, India",
     links: {
-      linkedin: "https://linkedin.com/in/pradeep-kaviraj",
+      linkedin: "https://linkedin.com/in/pradeep-kaviraj-283259324",
       github: "https://github.com/PradeepKaviraj",
-      portfolio: "https://pradeep-portfolio-lovat-chi.vercel.app",
-      resume: "/Pradeep_Kaviraj_Resume.pdf"
+      portfolio: "http://pradeepdev.duckdns.org"
     }
   },
 
-  summary:
-    "Full Stack Developer specializing in scalable web applications using Next.js, TypeScript, and Node.js. Experienced in building AI-powered platforms with LLM integration (LLaMA via OpenRouter API), real-time streaming, and context-aware systems. Strong in REST API design, authentication (JWT, bcrypt), database architecture (MongoDB, Prisma), and performance optimization.",
+  summary: "Full Stack Developer with strong backend focus, experienced in building scalable web applications and AI-powered systems using Next.js, Node.js, and TypeScript. Skilled in REST API design, authentication systems, and cloud deployment on AWS. Hands-on experience integrating LLM APIs with real-time streaming and persistent data handling.",
+
+  roleFocus: {
+    frontend: {
+      headline: "Frontend Engineer (React / Next.js)",
+      highlights: [
+        "Built real-time streaming AI chat interfaces",
+        "Developed reusable component architecture",
+        "Handled loading, partial responses, and fallback UI states",
+        "Built responsive UI using Tailwind CSS and animations"
+      ],
+      projects: [
+        "AI SaaS Dashboard",
+        "AI-Powered Developer Portfolio"
+      ]
+    },
+    backend: {
+      headline: "Backend Engineer (Node.js / APIs)",
+      highlights: [
+        "Designed REST APIs with JWT authentication",
+        "Implemented secure access control and middleware",
+        "Optimized MongoDB queries using indexing",
+        "Handled async workflows and error handling"
+      ],
+      projects: [
+        "AI SaaS Dashboard",
+        "Prison Management System"
+      ]
+    },
+    fullstack: {
+      headline: "Full Stack Developer",
+      highlights: [
+        "Built end-to-end systems from UI to deployment",
+        "Integrated frontend, backend, and AI services",
+        "Deployed applications using AWS and Vercel",
+        "Managed complete application lifecycle"
+      ],
+      projects: [
+        "AI SaaS Dashboard",
+        "AI-Powered Developer Portfolio"
+      ]
+    },
+    ai: {
+      headline: "AI Application Engineer",
+      highlights: [
+        "Integrated OpenRouter LLaMA APIs into applications",
+        "Built real-time streaming AI response systems",
+        "Designed prompt handling and context management",
+        "Handled API failures and fallback mechanisms"
+      ],
+      projects: [
+        "AI SaaS Dashboard",
+        "AI-Powered Developer Portfolio"
+      ]
+    }
+  },
 
   skills: {
-    languages: ["JavaScript (ES6+)", "TypeScript", "SQL", "HTML5", "CSS3"],
-
-    frontend: [
+    core: [
+      "JavaScript",
+      "TypeScript",
+      "Node.js",
       "React.js",
-      "Next.js (App Router)",
-      "Redux Toolkit",
-      "Context API",
+      "Next.js"
+    ],
+    backend: [
+      "REST APIs",
+      "JWT Authentication",
+      "Middleware",
+      "MongoDB",
+      "MySQL"
+    ],
+    frontend: [
       "Tailwind CSS",
       "Framer Motion",
-      "Responsive UI Design"
+      "Responsive Design",
+      "Context API"
     ],
-
-    backend: [
-      "Node.js",
-      "Express.js",
-      "RESTful API Development",
-      "Next.js API Routes",
-      "Authentication (JWT, bcrypt)",
-      "Middleware",
-      "API Integration"
-    ],
-
-    databases: [
-      "MongoDB Atlas",
-      "Prisma ORM",
-      "MySQL",
-      "Database Design",
-      "CRUD Operations"
-    ],
-
     ai: [
       "OpenRouter API",
-      "LLaMA 3.1",
+      "LLaMA",
       "Prompt Engineering",
-      "AI API Integration",
       "Streaming Responses"
     ],
-
+    devops: [
+      "AWS EC2",
+      "Nginx",
+      "PM2",
+      "Vercel",
+      "SSL",
+      "DNS"
+    ],
     tools: [
       "Git",
-      "GitHub",
-      "Vercel",
       "Postman",
-      "CI/CD Pipelines",
-      "Environment Variables"
-    ],
-
-    core: [
-      "Data Structures & Algorithms (Basic)",
-      "OOP Principles (Basic)",
-      "System Design Basics",
-      "Scalable Architecture",
-      "Performance Optimization"
+      "Prisma",
+      "Jest"
     ]
   },
 
   projects: [
     {
       name: "AI SaaS Dashboard",
+      featured: true,
+      link: "https://ai-saas-project-alpha.vercel.app/",
+      github: "https://github.com/PradeepKaviraj",
       tech: [
         "Next.js",
         "TypeScript",
+        "Node.js",
         "MongoDB",
         "Prisma",
         "JWT",
-        "OpenRouter API",
-        "Tailwind CSS"
+        "OpenRouter"
       ],
-      featured: true,
-      link: "https://ai-saas-project-alpha.vercel.app/",
+      impact: "AI SaaS platform supporting multi-session chat with real-time streaming",
       description: [
-        "Built full-stack AI SaaS platform with multi-tool workflows (chat, content generation, code explanation)",
-        "Integrated LLaMA (OpenRouter API) with real-time streaming responses",
-        "Designed multi-chat architecture with persistent conversation history",
-        "Implemented secure authentication using JWT, httpOnly cookies, and bcrypt",
-        "Handled concurrent users with scalable backend design",
-        "Deployed production-ready app on Vercel"
+        "Built real-time AI chat system with streaming responses",
+        "Designed REST APIs for session-based chat handling",
+        "Implemented JWT authentication and protected routes",
+        "Structured MongoDB schema for efficient data handling",
+        "Integrated OpenRouter LLM APIs for chat workflows",
+        "Deployed full-stack application on Vercel with real-time streaming support"
       ]
     },
-
     {
       name: "AI-Powered Developer Portfolio",
+      link: "http://pradeepdev.duckdns.org",
+      github: "https://github.com/PradeepKaviraj",
       tech: [
         "Next.js",
         "TypeScript",
-        "Tailwind CSS",
-        "OpenRouter API"
+        "OpenRouter",
+        "AWS EC2",
+        "Nginx",
+        "PM2"
       ],
-      link: "https://pradeep-portfolio-lovat-chi.vercel.app",
+      impact: "Portfolio with integrated AI chatbot and custom cloud deployment",
       description: [
-        "AI chatbot for recruiter interaction with real-time responses",
-        "Streaming API with custom chat state management",
-        "Structured prompt system with fallback handling",
-        "Fully responsive and optimized UI"
+        "Built AI chatbot with real-time streaming responses",
+        "Handled prompt logic and conversational context",
+        "Deployed application on AWS EC2 with Nginx and PM2",
+        "Configured SSL and domain routing"
       ]
     },
-
     {
-      name: "Parents Choice — Insurance Platform",
+      name: "Parents Choice (Insurance Platform)",
       tech: [
         "Next.js",
         "TypeScript",
         "Tailwind CSS",
+        "Framer Motion",
         "Nodemailer"
       ],
-      link: "https://parentschoices.in",
+      impact: "Client-facing insurance platform with responsive UI",
       description: [
-        "Built client-facing insurance platform",
-        "Reusable component architecture",
-        "Integrated email workflows using Nodemailer",
-        "Improved UI performance and responsiveness"
+        "Built responsive UI using Next.js and Tailwind CSS",
+        "Implemented contact form with email workflow",
+        "Added animations using Framer Motion"
       ]
     },
-
-    {
-      name: "Creative Academy",
-      tech: ["Next.js", "JavaScript", "Tailwind CSS"],
-      link: "https://creative-academy-sepia.vercel.app",
-      description: [
-        "Dynamic course platform with routing",
-        "Converted Figma designs to production UI",
-        "Optimized performance using lazy loading and code splitting"
-      ]
-    },
-
-    {
-      name: "Learning Management System",
-      tech: [
-        "Next.js",
-        "TypeScript",
-        "Redux Toolkit",
-        "Tailwind CSS"
-      ],
-      status: "In Progress",
-      link: "https://github.com/PradeepKaviraj/lms-clients",
-      description: [
-        "Designing scalable LMS architecture",
-        "Implementing admin workflows",
-        "Building dashboard analytics",
-        "Handling bulk data upload (XLSX)"
-      ]
-    },
-
     {
       name: "Prison Management System",
-      tech: ["React.js", "Node.js", "Express.js", "MySQL"],
+      tech: [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MySQL"
+      ],
+      impact: "Full-stack CRUD system managing structured data",
       description: [
-        "Full-stack CRUD application with REST APIs",
-        "Designed normalized relational database schema",
-        "Managed multiple modules with efficient data handling"
+        "Built REST APIs for CRUD operations",
+        "Designed normalized MySQL schema",
+        "Handled secure data flow between frontend and backend"
       ]
     }
   ],
 
   experience: [
     {
-      role: "Software Developer Intern",
+      role: "Software Developer Trainee",
       company: "NexDesign Studio Pvt. Ltd.",
-      duration: "July 2025 – January 2026",
+      duration: "Jan 2026 – Present",
       location: "Bengaluru",
       points: [
-        "Delivered 3+ production-grade applications",
-        "Built 20+ reusable UI components",
-        "Integrated REST APIs for authentication and workflows",
-        "Collaborated using Git (PRs, code reviews, branching)",
-        "Deployed applications on Vercel",
-        "Ensured responsive UI across devices"
+        "Developed reusable React components to standardize UI architecture",
+        "Implemented JWT-based authentication and access control",
+        "Optimized MongoDB queries for better data retrieval",
+        "Debugged full-stack issues using structured error handling"
+      ]
+    },
+    {
+      role: "Software Developer Intern",
+      company: "NexDesign Studio Pvt. Ltd.",
+      duration: "Jul 2025 – Dec 2025",
+      location: "Bengaluru",
+      points: [
+        "Built production-ready web applications",
+        "Converted Figma designs into responsive UI",
+        "Integrated backend services and workflows",
+        "Managed deployments using Git and Vercel"
       ]
     }
   ],
@@ -201,27 +231,24 @@ export const resumeData: ResumeData = {
 
   certifications: [
     {
-      name: "Full Stack Development Program",
-      status: "2025–2026"
+      name: "Full Stack Development – NexDesign Studio"
     },
     {
-      name: "Advanced Diploma in Data Center Architecture",
-      year: "2025"
+      name: "Advanced Diploma in Data Center Architecture"
     }
   ],
 
   strengths: [
-    "Full Stack Development (Next.js, Node.js, TypeScript)",
-    "AI & LLM Integration (OpenRouter, LLaMA, Streaming)",
-    "Database Architecture & Design (MongoDB, Prisma, SQL)",
-    "Scalable & Performance-Optimized Web Solutions",
-    "Modern UI/UX with Tailwind CSS & Framer Motion"
+    "Backend API Development",
+    "Full Stack System Building",
+    "AI Integration in Applications",
+    "Cloud Deployment (AWS)",
+    "Debugging and Problem Solving"
   ],
 
   languages: [
     { name: "English", level: "Professional" },
-    { name: "Hindi", level: "Professional" },
-    { name: "Tamil", level: "Native" },
-    { name: "Kannada", level: "Fluent" }
+    { name: "Tamil", level: "Fluent" },
+    { name: "Kannada", level: "Conversational" }
   ]
 };

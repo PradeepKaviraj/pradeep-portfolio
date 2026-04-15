@@ -1,95 +1,81 @@
 "use client";
 
-import { useRef } from 'react';
-import { motion, Variants, useScroll, useTransform } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 import Link from 'next/link';
 
 const Hero = () => {
-  const { name, title } = resumeData.personalInfo;
-  const tagline = resumeData.summary.split('.')[0] + '.';
-
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
+  const { name, tagline } = resumeData.personalInfo;
   
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.5]);
+  // UI Override for proof line
+  const proofLine = "Built and deployed AI SaaS with real-time streaming on Vercel, and production systems on AWS";
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
       },
-      willChange: "opacity, transform",
+      willChange: "opacity",
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 40, scale: 0.95 },
-    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }, willChange: "opacity, transform" },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" }, willChange: "opacity, transform" },
   };
 
   return (
-    <section ref={containerRef} id="hero" className="min-h-[100dvh] flex flex-col items-center justify-center bg-black text-white px-6 sm:px-8 relative overflow-hidden">
-      {/* Background Glows */}
-      <motion.div style={{ scale: glowScale, willChange: "transform" }} className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-blue-600/20 blur-[50px] md:blur-[150px] rounded-full pointer-events-none" />
-      <motion.div style={{ scale: glowScale, willChange: "transform" }} className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-cyan-600/10 blur-[50px] md:blur-[150px] rounded-full pointer-events-none" />
-
+    <section id="hero" className="min-h-[100dvh] flex flex-col items-center justify-center bg-black text-white px-6 sm:px-8 relative overflow-hidden py-16">
       <motion.div
-        style={{ y: contentY, opacity: contentOpacity, willChange: "transform, opacity" }}
-        className="relative z-10 text-center max-w-5xl mx-auto w-full pt-20"
+        className="relative z-10 text-center max-w-4xl mx-auto w-full"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants} className="mb-4">
-          <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-cyan-400 text-sm md:text-base font-medium tracking-wide">
+        {/* Micro-conversion line */}
+        <motion.div variants={itemVariants} className="mb-6 flex flex-col sm:flex-row justify-center items-center gap-3">
+          <span className="inline-block py-1.5 px-4 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 text-sm font-semibold tracking-wide">
             Hello, I am {name}
+          </span>
+          <span className="inline-block py-1.5 px-4 rounded-full bg-emerald-950 border border-emerald-900 text-emerald-400 text-sm font-bold tracking-wide flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Available for Backend / Full Stack Developer roles
           </span>
         </motion.div>
 
-        <motion.h1 variants={itemVariants} className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight mb-6 leading-tight">
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-            {title.split(" ")[0]}
-          </span>
-          <br />
-          <span className="text-white">{title.split(" ").slice(1).join(" ")}</span>
+        <motion.h1 variants={itemVariants} className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-tight text-white">
+           <span className="text-blue-500">Backend</span>-Focused<br /> Full Stack Developer
         </motion.h1>
 
-        <motion.p variants={itemVariants} className="text-lg sm:text-xl md:text-2xl text-zinc-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+        <motion.p variants={itemVariants} className="text-xl sm:text-2xl text-zinc-300 mb-6 max-w-2xl mx-auto leading-relaxed">
           {tagline}
+        </motion.p>
+        
+        {/* Superior Proof Line */}
+        <motion.div variants={itemVariants} className="mb-4 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl font-bold text-white bg-blue-900/20 py-4 px-6 rounded-2xl border border-blue-500/30 flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+            <span className="text-blue-400 text-2xl">⚡</span> {proofLine}
+          </p>
+        </motion.div>
+
+        {/* Confidence Signal */}
+        <motion.p variants={itemVariants} className="text-sm sm:text-base font-medium text-zinc-400 mb-10 max-w-xl mx-auto uppercase tracking-widest bg-zinc-900/50 py-2 px-4 rounded-lg border border-zinc-800/50">
+          Built production-ready applications with real-world deployment
         </motion.p>
 
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full sm:w-auto">
-          <Link href="#projects" className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-xl font-bold hover:scale-105 transition-transform active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)] text-center">
-            Explore My Work
-          </Link>
-          <Link href="#contact" className="w-full sm:w-auto px-10 py-4 border border-white/10 bg-white/5 backdrop-blur-md rounded-xl font-bold hover:bg-white/10 transition-colors text-center">
-            Get in Touch
-          </Link>
+          <a href="#projects" className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-xl font-bold hover:bg-zinc-200 hover:scale-105 transition-all duration-300 active:scale-95 text-center shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+            View Projects
+          </a>
+          {resumeData.personalInfo.links.resume && (
+            <a href={resumeData.personalInfo.links.resume} target="_blank" rel="noreferrer" className="w-full sm:w-auto px-10 py-4 border border-zinc-700 bg-zinc-900 rounded-xl font-bold hover:bg-zinc-800 hover:scale-105 transition-all duration-300 text-center text-white">
+              Resume
+            </a>
+          )}
         </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-zinc-500"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-      >
-        <span className="text-sm tracking-widest uppercase">Scroll</span>
-        <motion.div
-          className="w-px h-12 bg-gradient-to-b from-zinc-500 to-transparent"
-          animate={{ scaleY: [0, 1, 0], originY: [0, 0, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: [0.42, 0, 0.58, 1] }}
-        />
       </motion.div>
     </section>
   );

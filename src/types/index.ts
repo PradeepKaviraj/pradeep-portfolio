@@ -8,26 +8,41 @@ export interface PersonalLinks {
 export interface PersonalInfo {
   name: string;
   title: string;
+  tagline?: string;
   phone: string;
   email: string;
   location: string;
   links: PersonalLinks;
 }
 
+export interface RoleFocusSection {
+  headline: string;
+  highlights: string[];
+  projects: string[];
+}
+
+export interface RoleFocus {
+  frontend: RoleFocusSection;
+  backend: RoleFocusSection;
+  fullstack: RoleFocusSection;
+  ai: RoleFocusSection;
+}
+
 export interface Skills {
-  languages: string[];
-  frontend: string[];
-  backend: string[];
-  databases: string[];
-  ai: string[];
-  tools: string[];
   core: string[];
+  backend: string[];
+  frontend: string[];
+  ai: string[];
+  devops: string[];
+  tools: string[];
 }
 
 export interface Project {
   name: string;
   tech: string[];
   link?: string;
+  github?: string;
+  impact?: string;
   description: string[];
   status?: string;
   featured?: boolean;
@@ -62,6 +77,7 @@ export interface Language {
 export interface ResumeData {
   personalInfo: PersonalInfo;
   summary: string;
+  roleFocus?: RoleFocus;
   skills: Skills;
   projects: Project[];
   experience: Experience[];

@@ -1,172 +1,92 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion, Variants } from 'framer-motion';
 import { resumeData } from '@/data/resumeData';
 
 const Experience = () => {
-  const [activeTab, setActiveTab] = useState<'experience' | 'education' | 'certifications'>('experience');
-  
-  const { experience, education, certifications } = resumeData;
+  const { experience } = resumeData;
 
-  const tabContent = {
-    experience: (
-      <div className="space-y-12">
-        {experience.map((exp, i) => (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
-            style={{ willChange: "transform, opacity" }}
-            key={i} 
-            className="relative pl-8 md:pl-0"
-          >
-            {/* Timeline line and dot for mobile */}
-            <div className="md:hidden absolute left-0 top-0 bottom-[-3rem] w-px bg-white/10" />
-            <div className="md:hidden absolute left-[-4px] top-2 w-[9px] h-[9px] bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.8)]" />
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+      willChange: "opacity"
+    }
+  };
 
-            <div className="grid md:grid-cols-[1fr_2fr] gap-4 md:gap-12 group cursor-pointer">
-              <div className="md:text-right pt-1">
-                <span className="text-emerald-500 font-mono text-sm md:text-base font-bold bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">{exp.duration}</span>
-              </div>
-              
-              <div className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-emerald-500/30 transition-all shadow-lg">
-                <h3 className="text-2xl font-bold mb-1 text-white group-hover:text-emerald-400 transition-colors">{exp.role}</h3>
-                <p className="text-lg text-zinc-400 mb-2">{exp.company} <span className="text-sm px-2">•</span> {exp.location}</p>
-                <ul className="mt-4 space-y-3">
-                  {exp.points.map((highlight, idx) => (
-                    <li key={idx} className="flex gap-3 text-zinc-300">
-                      <span className="text-emerald-500 shrink-0 mt-1.5 text-xs">◆</span>
-                      <span className="leading-relaxed">{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    ),
-    education: (
-      <div className="space-y-8">
-        {education.map((edu, i) => (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
-            style={{ willChange: "transform, opacity" }}
-            key={i} 
-            className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-cyan-500/30 transition-all shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 group"
-          >
-            <div>
-              <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">{edu.degree}</h3>
-              <p className="text-lg text-zinc-400">{edu.college}</p>
-              {edu.cgpa && <p className="text-sm text-zinc-500 mt-2 font-mono">CGPA: {edu.cgpa}</p>}
-            </div>
-            <div className="shrink-0 flex items-start">
-              <span className="text-cyan-400 font-mono text-sm md:text-base font-bold bg-cyan-400/10 px-4 py-2 rounded-full border border-cyan-400/20">{edu.duration}</span>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    ),
-    certifications: (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {certifications.map((cert, i) => (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
-            style={{ willChange: "transform, opacity" }}
-            key={i} 
-            className="p-6 md:p-8 rounded-3xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 hover:border-purple-500/30 transition-all shadow-lg group relative overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500"><path d="M12 15l-2 5l9-5z"/><circle cx="12" cy="8" r="6"/></svg>
-            </div>
-            <h3 className="text-xl font-bold mb-4 text-white group-hover:text-purple-400 transition-colors relative z-10 pr-8">{cert.name}</h3>
-            
-            <div className="flex items-center gap-3 mt-auto relative z-10">
-              {cert.year && (
-                <span className="text-sm font-mono text-zinc-400 bg-zinc-800 px-3 py-1 rounded-full">{cert.year}</span>
-              )}
-              {cert.status && (
-                <span className="text-sm font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1 rounded-full">{cert.status}</span>
-              )}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    )
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
   return (
-    <section id="experience" className="py-24 md:py-32 bg-black text-white relative">
-      <div className="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
-      <div className="container mx-auto px-6 sm:px-8 max-w-5xl">
-        <div className="text-center mb-16 md:mb-20">
+    <section id="experience" className="py-24 bg-black text-white relative border-t border-white/5">
+      <div className="container mx-auto px-6 sm:px-8 max-w-6xl">
+        <div className="mb-16">
+          <p className="text-xs font-bold tracking-[0.2em] text-zinc-500 uppercase mb-4">
+            EXPERIENCE
+          </p>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4"
+            className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4"
           >
-            My <span className="text-emerald-500">Journey</span>.
+            Professional <span className="text-blue-500">Journey</span>.
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.1 }}
-            className="text-zinc-400 text-lg sm:text-xl max-w-2xl mx-auto"
+            className="text-zinc-400 text-lg sm:text-xl max-w-2xl"
           >
-            A timeline of my professional experience, education, and continuous learning path.
+            A timeline of my professional experience in building scalable solutions.
           </motion.p>
         </div>
 
-        {/* Custom Tabs */}
-        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-12 sm:mb-16 bg-zinc-900/50 p-2 sm:p-2.5 rounded-2xl sm:rounded-full border border-white/5 w-fit mx-auto backdrop-blur-md">
-          {(['experience', 'education', 'certifications'] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`relative px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-full text-sm sm:text-base font-bold transition-all w-full sm:w-auto capitalize ${
-                activeTab === tab 
-                  ? 'text-white' 
-                  : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5'
-              }`}
+        <motion.div 
+          className="space-y-12 pl-6 sm:pl-0"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {experience.map((exp, i) => (
+            <motion.div 
+              key={i} 
+              variants={itemVariants}
+              className="relative sm:grid sm:grid-cols-[1fr_3fr] gap-8 group"
             >
-              {activeTab === tab && (
-                <motion.div
-                  layoutId="activeTabBadge"
-                  className="absolute inset-0 bg-white/10 border border-white/20 rounded-xl sm:rounded-full"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              <span className="relative z-10">{tab}</span>
-            </button>
-          ))}
-        </div>
+              {/* Timeline line and dot */}
+              <div className="absolute left-[-24px] sm:left-auto sm:right-[-24px] top-0 bottom-[-3rem] w-px bg-zinc-800 hidden sm:block" />
+              <div className="absolute left-[-28px] sm:left-auto sm:-right-[29px] top-2 w-[10px] h-[10px] bg-blue-500 rounded-full hidden sm:block shadow-[0_0_10px_rgba(59,130,246,0.6)]" />
 
-        {/* Tab Content Area */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2 }}
-            >
-              {tabContent[activeTab]}
+              {/* Mobile Timeline dot/line */}
+              <div className="sm:hidden absolute left-[-24px] top-0 bottom-[-3rem] w-px bg-zinc-800" />
+              <div className="sm:hidden absolute left-[-28px] top-2 w-[10px] h-[10px] bg-blue-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.6)]" />
+
+              <div className="sm:text-right pt-1 mb-2 sm:mb-0 sm:pr-8">
+                <span className="text-zinc-400 font-mono text-sm sm:text-base font-bold bg-zinc-900 px-3 py-1 rounded-md border border-zinc-800">{exp.duration}</span>
+              </div>
+              
+              <div className="p-8 rounded-3xl border border-zinc-800 bg-zinc-900 shadow-md transition-all duration-300 group-hover:scale-[1.02] group-hover:border-zinc-600 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.03)] cursor-default">
+                <h3 className="text-2xl font-bold mb-1 text-white group-hover:text-blue-400 transition-colors">{exp.role}</h3>
+                <p className="text-lg text-blue-400 font-medium mb-6">{exp.company} <span className="text-zinc-600 text-sm px-2">•</span> <span className="text-zinc-400">{exp.location}</span></p>
+                <ul className="space-y-3">
+                  {exp.points.map((highlight, idx) => (
+                    <li key={idx} className="flex gap-3 text-zinc-300">
+                      <span className="text-blue-500 shrink-0 mt-1 opacity-80">▹</span>
+                      <span className="leading-relaxed">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
-          </AnimatePresence>
-        </div>
-
+          ))}
+        </motion.div>
       </div>
     </section>
   );
