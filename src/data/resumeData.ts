@@ -162,6 +162,8 @@ export const resumeData: ResumeData = {
     },
     {
       name: "Parents Choice (Insurance Platform)",
+      link: "https://parentschoices.vercel.app/",
+      github: "https://github.com/PradeepKaviraj/PARENTS-CHOICE",
       tech: [
         "Next.js",
         "TypeScript",
